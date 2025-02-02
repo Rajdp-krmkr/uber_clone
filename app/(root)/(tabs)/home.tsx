@@ -4,7 +4,7 @@ import { Link } from 'expo-router'
 import { FlatList, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const recentRides = [[
+const recentRides = [
     {
         "ride_id": "1",
         "origin_address": "Kathmandu, Nepal",
@@ -101,7 +101,7 @@ const recentRides = [[
             "rating": "4.70"
         }
     }
-]]
+]
 
 export default function Page() {
     const { user } = useUser()
