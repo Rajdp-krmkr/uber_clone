@@ -107,6 +107,7 @@ const recentRides = [
 
 export default function Page() {
     const { user } = useUser();
+    console.log(user);
     const loading = true;
 
     return (
@@ -114,6 +115,7 @@ export default function Page() {
             <FlatList
                 data={recentRides}
                 renderItem={({ item }) => (<RideCard ride={item} />)}
+                //TODO the item portion can be changed later
                 className='px-5'
                 keyboardShouldPersistTaps='handled'
                 contentContainerStyle={{
@@ -122,7 +124,7 @@ export default function Page() {
                 ListEmptyComponent={() => (
                     <View className='flex flex-col items-center justify-center'>
                         {loading ?
-                            <ActivityIndicator size={'large'} color="#000"/>
+                            <ActivityIndicator size={'large'} color="#000" />
                             :
                             <>
                                 <Image
@@ -136,7 +138,13 @@ export default function Page() {
                         }
                     </View>
                 )}
-            //TODO the item portion can be changed later
+                ListHeaderComponent={() => (
+                    <>
+                        <View className='flex flex-row items-center justify-between my-5'>
+                            <Text className='text-xl font-JakartaExtraBold'>Welcome {user?.firstName || user?.emailAddresses[0].emailAddress} 👋 </Text>
+                        </View>
+                    </>
+                )}
             />
         </SafeAreaView>
     )
