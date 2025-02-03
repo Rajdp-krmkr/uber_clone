@@ -1,7 +1,9 @@
 import RideCard from '@/components/RideCard';
+import { images } from '@/constants';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
+import { isLoading } from 'expo-font';
 import { Link } from 'expo-router'
-import { FlatList, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const recentRides = [
@@ -104,13 +106,36 @@ const recentRides = [
 ]
 
 export default function Page() {
-    const { user } = useUser()
+    const { user } = useUser();
+    const loading = true;
 
     return (
         <SafeAreaView>
             <FlatList
                 data={recentRides}
                 renderItem={({ item }) => (<RideCard ride={item} />)}
+                className='px-5'
+                keyboardShouldPersistTaps='handled'
+                contentContainerStyle={{
+                    paddingBottom: 50
+                }}
+                ListEmptyComponent={() => (
+                    <View className='flex flex-col items-center justify-center'>
+                        {loading ?
+                            <ActivityIndicator size={'large'} color="#000"/>
+                            :
+                            <>
+                                <Image
+                                    source={images.noResult}
+                                    className='w-40 h-40'
+                                    resizeMode='contain'
+                                    alt='No recent rides found'
+                                />
+                                <Text className='text-sm'>No recent rides found </Text>
+                            </>
+                        }
+                    </View>
+                )}
             //TODO the item portion can be changed later
             />
         </SafeAreaView>
